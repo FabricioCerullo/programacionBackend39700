@@ -85,7 +85,7 @@ class ProductManager{
 
 
 async function main() {
-   /* const manager = new ProductManager();
+   /*const manager = new ProductManager();
     await manager.addProduct("Coca Cola 500ml.", "Bebida Gaseosa", 260, "", "7790895000782", 20);
     await manager.addProduct("Coca Cola 1.5lt.", "Bebida Gaseosa", 550, "", "7790895000430", 25);
     await manager.addProduct("Fanta 3lt.", "Bebida Gaseosa", 900, "", "7790895064111", 35);
@@ -98,7 +98,7 @@ async function main() {
     await manager.addProduct("Pizza con Rucula", "Gastronomia", 1800, "", "1103", 2);
 
     console.log(await manager.getProducts());
-   /* await manager.deleteProduct(0);
+    await manager.deleteProduct(0);
     console.log(await manager.getProducts());
     await manager.updateProduct(1, {title: "coca de 1.5", price:840});
     console.log(await manager.getProducts());
