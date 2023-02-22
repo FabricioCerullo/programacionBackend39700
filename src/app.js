@@ -2,21 +2,25 @@ import express from "express";
 import ProductManager from "./desafioJsBackend.js";
 
 const app = express();
-let manager = new ProductManager("./prod.json");
+const manager = new ProductManager("./prod.json");
+let prod = await manager.getProducts();
 
 app.get("/products", async (req, res) => {
-    res.send(manager.getProduct());
+    res.send(prod);
 });
 
 app.get("/products/:id", async (req, res) => {
     let numeroProduct = parseInt(req.params.id);
-    res.send(manager.getProductById(numeroProduct));
+    let prodFind = prod.find((x)=>x.id===numeroProduct);
+    if (!prodFind) {
+        res.send("Producto no encontrado!")
+    }
+    res.send(prodFind);
 });
 
 app.get("/products",async  (req, res) => {
-    const producto= await manager.getProducts()
-   let { limit } = req.query;
-    res.send(producto.filter((x) => x.id <= limit));
+   const { limit } = req.query;
+    res.send(prod.filter((x) => x.id < limit));
 });
   
 app.listen(8080, () => {
