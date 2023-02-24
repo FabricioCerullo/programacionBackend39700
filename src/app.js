@@ -18,11 +18,11 @@ app.get("/products/:id", async (req, res) => {
     res.send(prodFind);
 });
 
-app.get("/products",async  (req, res) => {
-   const { limit } = req.query;
-    res.send(prod.filter((x) => x.id < limit));
-});
-  
+app.get("/products", async (req, res) => {
+    const { limit } = req.query;
+     res.send(prod.slice(0, limit));
+ });
+   
 app.listen(8080, () => {
     console.log(`Server listening to port 8080`)
 });
