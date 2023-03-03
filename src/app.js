@@ -1,28 +1,14 @@
-import express from "express";
-import ProductManager from "./desafioJsBackend.js";
+import express, { json } from "express";
+import productRouter from "./routes/products.router.js";
+import cartRouter from "./routes/cart.router.js";
+import __dirname from "./utils.js";
 
 const app = express();
-const manager = new ProductManager("./prod.json");
-let prod = await manager.getProducts();
+app.use(json())
 
+app.use("/api/products", productRouter);
+app.use("/api/cart", cartRouter);
 
-app.get("/products", async (req, res) => {
-    const { limit } = req.query;
-    if (!limit) {
-        res.send(prod);
-    }else{
-        res.send(prod.slice(0, limit));
-    }
-});
-app.get("/products/:id", async (req, res) => {
-    let numeroProduct = parseInt(req.params.id);
-    let prodFind = prod.find((x)=>x.id===numeroProduct);
-    if (!prodFind) {
-        res.send("Producto no encontrado!")
-    }
-    res.send(prodFind);
-});
-   
-app.listen(8080, () => {
-    console.log(`Server listening to port 8080`)
+app.listen(8080, ()=>{
+    console.log("Server listening on port 8080");
 });
