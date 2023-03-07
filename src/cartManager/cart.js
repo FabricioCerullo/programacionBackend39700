@@ -19,11 +19,13 @@ class CartManager{
         try {
             let carts = await this.getCart();
             const carroCompra = {
-                id: this.#acc,
+                cid: this.#acc,
                 products:[]
             }
-            carts = [...carts, carroCompra];
-            await fs.promises.writeFile(this.#path, JSON.stringify(carts))
+            const carro = await this.getCart();
+            const updateCart = [...carro, carroCompra];
+            this.#acc++;
+            await fs.promises.writeFile(this.#path, JSON.stringify(updateCart))
             return carts;
     
         } catch (error) {
@@ -31,9 +33,9 @@ class CartManager{
         }
     }
 
-    async findCartToID(id) {
+    async findCartToID(cid) {
         let carts = await this.getCart();
-        let cartId =  carts.find((x)=>x.id===id);
+        let cartId =  carts.find((x)=>x.cid===cid);
         if (cartId) {
             return cartId;
         }else {
@@ -41,10 +43,10 @@ class CartManager{
         }
     }
 
-    async addProductToCart(id, product) {
+    async addProductToCart(cid, product) {
         try {
             let carts = await this.getCart();
-            let carro=await this.findCartToID(id);
+            let carro=await this.findCartToID(cid);
             let productExist = carro.products.find((x)=>x.id===id);
     
             if (productExist) {
