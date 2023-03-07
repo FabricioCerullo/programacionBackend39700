@@ -5,7 +5,6 @@ const productRouter = Router();
 productRouter.use(json());
 
 let manager = new ProductManager();
-
 let products = await manager.getProducts(); 
 let addProducts = await manager.addProduct();
 
@@ -45,8 +44,8 @@ productRouter.get("/:pid", async(req, res) => {
 
 productRouter.post("/", async(req, res) => {
     try {
-        const {title, description, price, thumbail=[], code, stock, status=true, category} = req.body
-        const newProd = addProducts(title, description, parseInt(price), thumbail, code, parseInt(stock), status, category);
+        const {title, description, price, thumbail=[], code, stock} = req.body
+        const newProd = addProducts(title, description, parseInt(price), thumbail, code, parseInt(stock));
         res.send(newProd);
     } catch (error) {
         res.status(404).send({status: "error", error: "Ha ocurrido un error!"});
