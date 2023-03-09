@@ -25,7 +25,7 @@ class CartManager{
             const carro = await this.getCart();
             const updateCart = [...carro, carroCompra];
             this.#acc++;
-            await fs.promises.writeFile(this.#path, JSON.stringify(updateCart))
+            await fs.promises.writeFile(this.path, JSON.stringify(updateCart))
             return carts;
     
         } catch (error) {
@@ -57,12 +57,12 @@ class CartManager{
     
                 let newCart = carts.filter((x)=>x.id!==id);
                 newCart = [...newCart, carro];
-                await fs.promises.writeFile(this.#path, JSON.stringify(newCart));
+                await fs.promises.writeFile(this.path, JSON.stringify(newCart));
             } else {
                 carro.products = [...carro.products, {id:product.id, quantity:1}];
                 let newCart = carts.filter( c => c.id !== id)
                 newCart = [...newCart, carro]
-                await fs.promises.writeFile(this.#path, JSON.stringify(newCart))
+                await fs.promises.writeFile(this.path, JSON.stringify(newCart))
     
             }
         } catch (error) {
