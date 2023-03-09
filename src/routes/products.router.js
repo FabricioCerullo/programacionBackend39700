@@ -1,5 +1,5 @@
 import { Router, json } from "express";
-import ProductManager from "../desafioJsBackend.js";
+import ProductManager from "../manager/desafioJsBackend.js";
 
 const productRouter = Router();
 productRouter.use(json());
