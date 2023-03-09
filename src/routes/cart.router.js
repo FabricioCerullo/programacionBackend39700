@@ -1,10 +1,10 @@
 import { Router, json } from "express";
-import CartManager from "../cartManager/cart.js";
-import ProductManager from "../desafioJsBackend.js";
+import CartManager from "../manager/cart.js";
+import ProductManager from "../manager/desafioJsBackend.js";
 
 
 const cartRouter = Router();
-cartRouter.use(json());
+//cartRouter.use(json());
 
 
 cartRouter.post('/', async (req, res)=>{
@@ -19,10 +19,11 @@ cartRouter.get('/:cid', async (req, res) => {
 })
 
 cartRouter.post('/:cid/product/:pid', async(req, res)=>{
-    let cid = parseInt(req.params.cid);
-    let pid = parseInt(req.params.pid);
-    let product = await ProductManager.getProductById(pid);
-    await CartManager.addProductToCart(cid, product);
+    const {cid, pid} = req.params;
+    const cartid = parseInt(cid);
+    const prodid = parseInt(pid);
+    let product = await ProductManager.getProductById(prodid);
+    await CartManager.addProductToCart(product, cartid);
     res.send({status:"sucess", payload:await CartManager.findCartToID(id)});
 })
 
