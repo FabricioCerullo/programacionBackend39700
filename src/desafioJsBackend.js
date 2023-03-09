@@ -11,10 +11,10 @@ class ProductManager{
         //Codigos Iguales o Repetidos
         const prod = await this.getProducts();
         const productSameCode = prod.some((product) =>product.code===code);
-            if(productSameCode){
+           /* if(productSameCode){
                 throw new Error("El codigo ya existe!")
             }
-
+*/
         //Que todos los campos sean obligatorios
 
         if (title&&description&&price&&thumbnail&&code&&stock) {
