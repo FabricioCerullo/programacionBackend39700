@@ -1,18 +1,22 @@
 import { Router, json } from "express";
-import ProductManager from "../manager/desafioJsBackend.js";
+import ProductManager from "../managers/desafioJsBackend.js";
+import __dirname from "../../../programacionBackend/src/utils.js";
+
+
 
 const productRouter = Router();
-productRouter.use(json());
+
 
 let manager = new ProductManager();
-let products = await manager.getProducts(); 
-let addProducts = await manager.addProduct();
+productRouter.use(json());
+//let addProducts = await manager.addProduct();
 
 
 //devuelve los prod. con el limite, sino los devuelve todos.
 
 productRouter.get('/', async (req,res) => {
     try {  
+        const products = await manager.getProducts();
          const {limit} = req.query;
          
          if (limit) {
