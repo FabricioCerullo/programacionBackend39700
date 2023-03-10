@@ -1,20 +1,25 @@
 import { Router, json } from "express";
-import CartManager from "../manager/cart.js";
-import ProductManager from "../manager/desafioJsBackend.js";
+import CartManager from "../managers/cart.js";
+import ProductManager from "../managers/desafioJsBackend.js";
 
 
 const cartRouter = Router();
-//cartRouter.use(json());
+let manager = new CartManager();
+cartRouter.use(json());
 
+cartRouter.get('/', async (req, res)=>{
+   const carro = await manager.getCart();
+    res.send({status:"sucess", payload: carro});
+})
 
 cartRouter.post('/', async (req, res)=>{
-    await CartManager.addNewCart();
+    await manager.addNewCart();
     res.send({status:"sucess", payload: "carro añadido"});
 })
 
 cartRouter.get('/:cid', async (req, res) => {
     const {cid} = req.params;
-    let carro = await CartManager.findCartToID(cid);
+    let carro = await manager.findCartToID(cid);
     res.send({status:"sucess", payload: carro});
 })
 
@@ -24,7 +29,7 @@ cartRouter.post('/:cid/product/:pid', async(req, res)=>{
     const prodid = parseInt(pid);
     let product = await ProductManager.getProductById(prodid);
     await CartManager.addProductToCart(product, cartid);
-    res.send({status:"sucess", payload:await CartManager.findCartToID(id)});
+    res.send({status:"sucess", payload:await manager.findCartToID(cid)});
 })
 
 export default cartRouter;
